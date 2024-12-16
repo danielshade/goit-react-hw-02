@@ -1,0 +1,36 @@
+.options{
+ display: flex;
+ gap: 12px;
+ justify-content: start;
+ padding-bottom: 40px;
+ 
+}
+
+.button{
+    padding: 0;
+    border: none;
+    border-radius: 5px;
+    width: 80px;
+    height: 40px;
+    transition: all 250ms;
+    background-color: darkgray;
+    color: #e8e6e6;
+    cursor: pointer;
+    
+}
+
+.button:hover {
+    background-color: #a19f9f;
+    color:#ffffff ;
+    box-shadow: 2px 2px #707070;
+}
+
+.button:active{
+    transform: scale(0.95);
+    transform:translateX(4px);
+    box-shadow: none;
+}
+
+.hidden{
+    display: none;
+}
