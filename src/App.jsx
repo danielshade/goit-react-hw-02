@@ -1,63 +1,59 @@
-import './App.css'
-import Description from './components/Description/Description';
-import Options from "./components/Options/Options"
-import Feedback from './components/Feedback/Feedback';
-import Notification from "./components/Notification/Notification"
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from "react";
+import Options from "../components/Options/Options.jsx";
+import Feedback from "../components/Feedback/Feedback.jsx";
+import Notification from "../components/Notification/Notification.jsx";
+import Description from "../components/Description/Description.jsx";
+import "./App.css";
 
 function App() {
-
-  const [feedbacks, setFeedback] = useState(() => {
-    const localFeedbacks = window.localStorage.getItem("feedbacks")
-
-    if (localFeedbacks !== null) {
-      return JSON.parse(localFeedbacks)
-    }
-    return { good: 0, neutral: 0, bad: 0 }
+  const [feedback, setFeedback] = useState(() => {
+    const savedFeedback = localStorage.getItem("feedback");
+    return savedFeedback
+      ? JSON.parse(savedFeedback)
+      : { good: 0, neutral: 0, bad: 0 };
   });
 
-  const totalFeedback = feedbacks.good + feedbacks.neutral + feedbacks.bad;
-  const PositiveFeedback = Math.round((feedbacks.good / totalFeedback) * 100)
+  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
 
+  const positiveFeedbackPercentage = totalFeedback
+    ? Math.round((feedback.good / totalFeedback) * 100)
+    : 0;
 
   const updateFeedback = (feedbackType) => {
-  
-    setFeedback({
-      ...feedbacks,
-    [feedbackType]: feedbacks [feedbackType] + 1
-    })
-    
-    
-  }
+    setFeedback((prevFeedback) => ({
+      ...prevFeedback,
+      [feedbackType]: prevFeedback[feedbackType] + 1,
+    }));
+  };
 
-  const clearFeedback  = ( ) => {
-    setFeedback({ ...feedbacks, neutral: 0, good: 0, bad: 0 })
-  }
+  const resetFeedback = () => {
+    setFeedback({ good: 0, neutral: 0, bad: 0 });
+  };
 
   useEffect(() => {
-    window.localStorage.setItem("feedbacks", JSON.stringify(feedbacks))
-  }, [feedbacks])
+    localStorage.setItem("feedback", JSON.stringify(feedback));
+  }, [feedback]);
 
   return (
-    <>
+    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
+      <h1>Sip Happens Cafe</h1>
       <Description />
       <Options
-        update={updateFeedback}
         totalFeedback={totalFeedback}
-        clear={clearFeedback}
+        onUpdateFeedback={updateFeedback}
+        onResetFeedback={resetFeedback}
       />
-      <>{totalFeedback > 0
-        ? <Feedback
-        good={feedbacks.good}
-        neutral={feedbacks.neutral}
-        bad={feedbacks.bad}
-        totalFeedback={totalFeedback}
-        positive={PositiveFeedback}
-      />
-        : <Notification
-        totalFeedback={ totalFeedback} /> }</>
-    </>
-  )
+      {totalFeedback > 0 ? (
+        <Feedback
+          feedback={feedback}
+          total={totalFeedback}
+          positiveFeedbackPercentage={positiveFeedbackPercentage}
+        />
+      ) : (
+        <Notification message="No feedback given yet" />
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
