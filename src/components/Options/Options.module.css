@@ -1,0 +1,48 @@
+.options {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #e0e0e0;
+}
+
+.options {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+}
+
+.resetButton {
+  background-color: #ffdddd;
+  border: 1px solid #ff8888;
+  font-weight: bold;
+}
+
+.resetButton:hover {
+  background-color: #ffcccc;
+}
